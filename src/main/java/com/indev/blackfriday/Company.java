@@ -4,18 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Company {
-    Map<String,Product> stock;
+    private Map<String,Product> stock;
 
     public Company() {
         stock=new HashMap<String, Product>();
     }
 
-    public float sells(String capsule) {
-        return 0;
+    public float sells(String productName) {
+        Product product=stock.get(productName);
+        return product.sellOfFiveEntities();
     }
 
-    public void stock(int productPrice, String productName, int productQuantity) {
-        stock.put(productName,new Product(productName,productPrice,productQuantity));
+    public void stock(int productQuantity, String productName, int productPrice) {
+        stock.put(productName,new Product(productName,productQuantity,productPrice));
 
     }
 
@@ -30,7 +31,7 @@ public class Company {
     public int totalAssets() {
         int totalResult=0;
         for (Product product:stock.values()){
-            totalResult+=product.totalPrice();
+            totalResult+=product.totalBinifi();
         }
         return totalResult;
     }
