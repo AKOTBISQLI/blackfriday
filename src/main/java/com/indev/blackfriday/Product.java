@@ -1,40 +1,38 @@
 package com.indev.blackfriday;
 
 public class Product {
+    public static final int FIXED_QUANTITY = 5;
     String name;
     int price;
-    int quantity;
+    int quantityInStock;
+    int quantitySelled;
 
-    public Product(String name, int price, int quantity) {
+
+    public Product(String name, int quantity, int price) {
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
+        this.quantityInStock = quantity;
     }
 
-    public String getName() {
-        return name;
+
+
+    public int totalPriceInStock(){
+        return this.price*this.quantityInStock;
+    }
+    public float totalPriceSelled(){
+        return quantitySelled*sellPrice();
+    }
+    public float sellOfFiveEntities(){
+        quantityInStock-= FIXED_QUANTITY;
+        quantitySelled+= FIXED_QUANTITY;
+        return (float) (sellPrice()*FIXED_QUANTITY);
+    }
+    public float sellPrice(){
+        return (float) (this.price*1.2);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public float totalBinifi(){
+        return totalPriceInStock()+totalPriceSelled();
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-    public int totalPrice(){
-        return this.price*this.quantity;
-    }
 }
