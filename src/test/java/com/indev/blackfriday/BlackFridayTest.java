@@ -11,23 +11,26 @@ import static org.junit.Assert.assertThat;
     The company can sell a given product at a fixed quantity and have a price sale margin of 20%
     In black friday, the company is selling two times the usual quantity (10 instead of 5) but have only a price sale margin of 10%
  */
-public class BlackFriday {
+public class BlackFridayTest {
+
+    public static final String CAPSULE = "capsule";
+    public static final String MACHINE = "machine";
 
     /*
-        Total assets is the total of money owned by the company
-     */
+                    Total assets is the total of money owned by the company
+                 */
     @Test
     public void oneProductInStock() {
         Company company = new Company();
-        company.stock(10, "capsule", 2);
+        company.stock(10, CAPSULE, 2);
         assertThat(company.totalAssets(), is(20));
     }
 
     @Test
     public void twoProductsInStock() {
         Company company = new Company();
-        company.stock(10, "capsule", 2);
-        company.stock(5, "machine", 100);
+        company.stock(10, CAPSULE, 2);
+        company.stock(5, MACHINE, 100);
         assertThat(company.totalAssets(), is(520));
     }
 
@@ -37,8 +40,8 @@ public class BlackFriday {
     @Test
     public void sellsProduct() {
         Company company = new Company();
-        company.stock(10, "capsule", 2);
-        float salePrice = company.sells("capsule");
+        company.stock(10, CAPSULE, 2);
+        float salePrice = company.sells(CAPSULE);
         assertThat(salePrice, is(12f));
         assertThat(company.totalAssets(), is(22));
     }
@@ -46,10 +49,10 @@ public class BlackFriday {
     @Test
     public void sellsProducts() {
         Company company = new Company();
-        company.stock(10, "capsule", 2);
-        float salePrice = company.sells("capsule");
+        company.stock(10, CAPSULE, 2);
+        float salePrice = company.sells(CAPSULE);
         assertThat(salePrice, is(12f));
-        salePrice = company.sells("capsule");
+        salePrice = company.sells(CAPSULE);
         assertThat(salePrice, is(12f));
         assertThat(company.totalAssets(), is(24));
     }
@@ -57,11 +60,11 @@ public class BlackFriday {
     @Test
     public void sellsDifferentProducts() {
         Company company = new Company();
-        company.stock(10, "capsule", 2);
-        company.stock(5, "machine", 100);
-        float salePrice = company.sells("capsule");
+        company.stock(10, CAPSULE, 2);
+        company.stock(5, MACHINE, 100);
+        float salePrice = company.sells(CAPSULE);
         assertThat(salePrice, is(12f));
-        salePrice = company.sells("machine");
+        salePrice = company.sells(MACHINE);
         assertThat(salePrice, is(600f));
         assertThat(company.totalAssets(), is(622));
     }
@@ -69,11 +72,11 @@ public class BlackFriday {
     @Test(expected = RuntimeException.class)
     public void sellsMoreThanStock() {
         Company company = new Company();
-        company.stock(5, "capsule", 2);
-        company.stock(5, "machine", 100);
-        float salePrice = company.sells("capsule");
+        company.stock(5, CAPSULE, 2);
+        company.stock(5, MACHINE, 100);
+        float salePrice = company.sells(CAPSULE);
         assertThat(salePrice, is(12f));
-        company.sells("capsule");
+        company.sells(CAPSULE);
     }
 
     /*
@@ -82,9 +85,9 @@ public class BlackFriday {
     @Test
     public void blackFridaySellProduct() {
         Company company = new Company();
-        company.stock(10, "capsule", 2);
-        company.stock(5, "machine", 100);
-        float salePrice = company.blackFriday().sells("capsule");
+        company.stock(10, CAPSULE, 2);
+        company.stock(5, MACHINE, 100);
+        float salePrice = company.blackFriday().sells(CAPSULE);
         assertThat(salePrice, is(22f));
         assertThat(company.totalAssets(), is(522));
     }
@@ -92,11 +95,11 @@ public class BlackFriday {
     @Test
     public void blackFridaySellProducts() {
         Company company = new Company();
-        company.stock(10, "capsule", 2);
-        company.stock(10, "machine", 100);
-        float salePrice = company.blackFriday().sells("capsule");
+        company.stock(10, CAPSULE, 2);
+        company.stock(10, MACHINE, 100);
+        float salePrice = company.blackFriday().sells(CAPSULE);
         assertThat(salePrice, is(22f));
-        salePrice = company.blackFriday().sells("machine");
+        salePrice = company.blackFriday().sells(MACHINE);
         assertThat(salePrice, is(1100f));
         assertThat(company.totalAssets(), is(1122));
     }
